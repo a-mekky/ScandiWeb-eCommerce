@@ -1,0 +1,173 @@
+
+.cable_config {
+  /* border-bottom: 1px solid #E1E8EE; */
+  margin-bottom: 20px;
+}
+.cable_config p{
+  text-align: left
+}
+
+.cable_choose {
+  display: flex;
+  margin: 7px;
+}
+
+.button {
+  margin: 5px;
+  width: 60px;
+  height: 40px;
+  position: relative;
+  border: 1px solid black;
+  font-size: 16px;
+  text-align: center;
+}
+
+.button label,
+.button input {
+  display: block;
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all .3s;
+}
+
+.button input[type="radio"] {
+  opacity: 0.011;
+  z-index: 8;
+  cursor: pointer;
+
+}
+
+.button input[type="radio"]:checked + label {
+  background: #1D1F22;
+  color: #fff;
+}
+
+.button label {
+  z-index: 7;
+  line-height: 1.8em;
+}
+
+/* Color Customize  */
+
+.button_color {
+  float: left;
+  margin: 5px;
+  width: 35px;
+  height: 35px;
+  position: relative;
+  border: 0.5px solid black;
+}
+
+.button_color label,
+.button_color input {
+  display: block;
+  padding: 5px 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all .3s;
+}
+
+.button_color input[type="radio"] {
+  opacity: 0.011;
+  z-index: 8;
+  cursor: pointer;
+}
+
+.button_color input[type="radio"]:checked + label{
+  border: 3px solid #5ECE7B;
+  color: #fff;
+  padding: 10px;
+}
+
+.button_color label {
+  z-index: 7;
+  line-height: 1.8em;
+}
+
+/* Smaller for miniCart */
+.button_color_small{
+  float: left;
+  margin: 3px;
+  width: 24px;
+  height: 27px;
+  position: relative;
+  border: 0.5px solid black;
+}
+
+.button_color_small label,
+.button_color_small input {
+  display: block;
+  padding: 5px 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all .3s;
+}
+
+.button_color_small input[type="radio"] {
+  opacity: 0.011;
+  z-index: 8;
+  cursor: pointer;
+}
+
+.button_color_small input[type="radio"]:checked + label{
+  border: 2px solid #5ECE7B;
+  color: #fff;
+  padding: 10px;
+}
+
+.button_color_small label {
+  z-index: 7;
+  /* line-height: 1.8em; */
+}
+
+
+
+
+.button_small {
+  margin: 3px;
+  width: 36px;
+  height: 33px;
+  position: relative;
+  border: 1px solid black;
+  font-size: 12px;
+  text-align: center;
+}
+
+.button_small label,
+.button_small input {
+  display: block;
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: all .3s;
+}
+
+.button_small input[type="radio"] {
+  opacity: 0.011;
+  z-index: 8;
+  cursor: pointer;
+
+}
+
+.button_small input[type="radio"]:checked + label {
+  background: #1D1F22;
+  color: #fff;
+}
+
+.button_small label {
+  z-index: 7;
+  line-height: 1.8em;
+}

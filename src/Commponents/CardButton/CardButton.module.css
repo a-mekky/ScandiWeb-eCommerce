@@ -1,0 +1,16 @@
+.btn {
+    position: absolute;
+    top: 320px;
+    right: 31px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 250ms;
+  }
+  .btn:hover {
+    transform: scale(1.1);
+  }
+  .btn :active {
+    transform: scale(0.8);
+  }
+  

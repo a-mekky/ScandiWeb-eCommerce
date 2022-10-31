@@ -1,0 +1,30 @@
+.buttton {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    width: max-content;
+    margin-left: 22px;
+  }
+  
+  .cartIcon {
+    position: relative;
+    top: 2px;
+    padding: 0 3px;
+    cursor: pointer;
+  }
+  
+  .productCount {
+    position: absolute;
+    text-align: center;
+    padding: 3px 7px;
+    font-family: Roboto;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    color: #ffffff;
+    background-color: #1d1f22;
+    border-radius: 50%;
+    top: -8px;
+    right: -6px;
+  }
+  

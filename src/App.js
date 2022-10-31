@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import NavBar from './Commponents/Navbar/Navbar';
+import PLP from './Pages/PLP/Product_Listing_Page_(PLP)';
+import { Route, Routes, useLocation, useNavigate, Navigate } from 'react-router-dom';
+import PDP from './Pages/PDP/Product_Description_Page_(PDP)';
+import Cart from './Pages/Cart/Cart';
+
+
 
 function App() {
+  const location = useLocation()
+  const navigate = useNavigate()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div>
+      <header>
+        <NavBar />
       </header>
+      <Routes>
+        <Route path='/' element={<Navigate  replace to='/all' />} />
+        <Route path='/:category' element={<PLP porps={location.state} navigate={navigate} />} />
+        <Route path='/productDetails/:id' element={<PDP props={location.state} navigate={navigate} />} />
+        <Route path='/cart' element={<Cart />} />
+      </Routes >
     </div>
   );
 }
