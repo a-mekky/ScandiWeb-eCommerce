@@ -21,10 +21,11 @@ class NavBar extends PureComponent {
                                     <ul>
                                         {data.categories.map((category) => {
                                             return (
-                                                <li key={category.name}>
-                                                    <NavLink to={`/${category.name}`} state={{ category: category.name }}
-                                                    >{category.name.toUpperCase()}</NavLink>
-                                                </li>
+                                                <NavLink key={category.name} to={`/${category.name}`} state={{ category: category.name }}>
+                                                    <li>
+                                                        {category.name.toUpperCase()}
+                                                    </li>
+                                                </NavLink>
                                             )
                                         })}
                                     </ul>

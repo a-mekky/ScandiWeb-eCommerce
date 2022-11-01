@@ -48,6 +48,9 @@ class Cart extends PureComponent {
         })
         this.setState({ qty: qty })
         this.HandelSum()
+        if (this.props.state.cart.products.length === 0) {
+            this.setState({ total: 0 })
+        }
     }
 
 
@@ -55,10 +58,10 @@ class Cart extends PureComponent {
         const { products } = this.props.state.cart
         return (<>
             <div className={style.shopping_cart}>
-                <div className={style.title}>
-                    {products.length === 0 ? (<h2>No Products Yet</h2>) : (
+                <div>
+                    {products.length === 0 ? (<p className={style.title}>No products yet</p>) : (
                         <>
-                            <h2>Cart</h2>
+                            <p className={style.title}>CART</p>
                             <>
                                 {products.map((item, key) => {
                                     let currentCurrency = item.productDetails.prices.find(obj => {
@@ -68,15 +71,17 @@ class Cart extends PureComponent {
                                     return (
                                         <div className={style.item} key={key}>
                                             <div className={style.item_details}>
-                                                <h4>{item.productDetails.name}</h4>
-                                                <h5><b><span>{currentCurrency.currency.symbol}</span> {currentCurrency.amount}</b></h5>
-                                                <Attribute attributes={item.productDetails.attributes} id={item.itemId}/>
+                                                <p className={style.productBrand}>{item.productDetails.brand}</p>
+                                                <p className={style.productname}>{item.productDetails.name}</p>
+                                                <p className={style.productPrice}>{currentCurrency.currency.symbol}{currentCurrency.amount}</p>
+                                                {item.productDetails.attributes &&
+                                                    <Attribute attributes={item.productDetails.attributes} id={item.itemId} miniCart={false} />
+                                                }
+
                                             </div>
-                                            <div>
-                                                <Counter qty={item.qty} id={item.itemId} pageSize={true} />
-                                            </div>
+                                            <Counter qty={item.qty} id={item.itemId} pageSize={true} />
                                             <div className={style.item_gallery}>
-                                                <ProductGallery gallery={item.productDetails.gallery} width={'200px'} height={'230px'} />
+                                                <ProductGallery gallery={item.productDetails.gallery} width={'200px'} height={'288px'} />
                                             </div>
                                         </div>
                                     )
@@ -84,22 +89,26 @@ class Cart extends PureComponent {
                             </>
                             <div className={style.orderSection}>
                                 <div>
-                                    <span>Tax 21%: </span>
+                                    <p>Tax 21%: </p>
                                     <span>
-                                        <b>
-                                            {Number(this.state.total * 0.21).toFixed(2)} 
-                                        </b>
+                                        {this.state.currencySymble}
+                                        {Number(this.state.total * 0.21).toFixed(2)}
                                     </span>
                                 </div>
                                 <div>
-                                    <span>Quantity: </span>
+                                    <p>Quantity: </p>
                                     <span>
-                                        <b>
-                                            {this.state.qty}
-                                        </b>
+                                        {this.state.qty}
                                     </span>
                                 </div>
-                                <TotalProductSum products={products} />
+                                <div>
+                                    <p>Total: </p>
+                                    <span className={style.totalPrice}>
+                                        {this.state.currencySymble}
+                                        {Number(this.state.total).toFixed(2)}
+                                    </span>
+                                </div>
+
                                 <button> ORDER </button>
                                 <br /><br /><br /><br />
                             </div>

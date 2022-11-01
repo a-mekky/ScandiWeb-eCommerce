@@ -17,29 +17,27 @@
     background-color: #ffffff;
     overflow-y: scroll;
     width: 400px;
+    /* height: 677px ; */
     padding: 8px 16px 20px;
     top: 0;
-    max-height: 540px;
+    max-height: 677px;
     right: 101px;
   }
   
   .title {
-  
     font-weight: 700;
     font-size: 16px;
-    line-height: 160%;
     color: #1d1f22;
-    /* margin-bottom: 23px; */
+    margin-bottom: 30px;
     text-align: left;
   }
   
   .totalItems {
-  
     font-weight: 500;
     font-size: 16px;
-    line-height: 160%;
     color: #1d1f22;
   }
+  
   .miniCard {
     display: flex;
     justify-content: space-between;
@@ -53,6 +51,7 @@
     flex-direction: column;
     justify-content: space-between;
     max-width: 120px;
+    margin-right: 60px
   }
   
   .itemName {
@@ -72,7 +71,6 @@
   }
   
   .itemAttrs {
-    /* margin-right: 5px; */
     min-width: 24px;
     padding: 3px;
     height: 24px;
@@ -103,7 +101,6 @@
     overflow: hidden;
     bottom: -20px;
     background-color: #fff;
-    /* background-color: #1d1f22; */
     width: 100%;
     z-index: 10;
   }

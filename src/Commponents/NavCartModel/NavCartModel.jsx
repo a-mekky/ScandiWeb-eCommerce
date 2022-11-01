@@ -15,14 +15,14 @@ class NavCartModal extends PureComponent {
   HandelSum() {
     let sum = 0
     this.props.products.map((item) => {
-        let product = item.productDetails
-        let currentCurrency = product.prices.find(obj => {
-            return obj.currency.label === this.props.currency.currency
-        })
-        sum += Number(currentCurrency.amount * item.qty)
-        return this.setState({ total: sum, currencySymble: currentCurrency.currency.symbol })
+      let product = item.productDetails
+      let currentCurrency = product.prices.find(obj => {
+        return obj.currency.label === this.props.currency.currency
+      })
+      sum += Number(currentCurrency.amount * item.qty)
+      return this.setState({ total: sum, currencySymble: currentCurrency.currency.symbol })
     })
-}
+  }
 
   componentDidMount() {
     window.addEventListener("keydown", this.handleCloseModal);
@@ -60,26 +60,29 @@ class NavCartModal extends PureComponent {
 
               <div key={key} className={style.miniCard}>
                 <div className={style.leftSide}>
-                  <p className={style.itemName}>{product.name}</p>
-                  <p>{product.category}</p>
+                  <p className={style.itemName}>{product.brand}</p>
+                  <p>{product.name}</p>
                   <p className={style.itemPrice}>
-                    <b><span>{currentCurrency.currency.symbol}</span> {currentCurrency.amount}</b>
+                    {currentCurrency.currency.symbol}{currentCurrency.amount}
                   </p>
                   <div className={style.attributes}>
-                    <Attributes attributes={product.attributes} id={item.itemId} />
+                    <Attributes attributes={product.attributes} id={item.itemId} miniCart={true} />
                   </div>
                 </div>
 
                 <div className={style.rightSide}>
                   <Counter qty={item.qty} id={item.itemId} />
-                  <ProductGallery gallery={product.gallery} width={'100px'} height={'137px'} />
+                  <ProductGallery gallery={product.gallery} width={'121px'} height={'190px'} />
                 </div>
               </div>
             )
           })}
 
           <div className={style.modalOptions}>
-           <TotalProductSum products={products}/>
+            <div>
+            <TotalProductSum products={products} />
+            </div>
+            
             <div className={style.buttons}>
               <Link to={"/cart"}>
                 <button className={style.buttonLink} onClick={onCloseModal}>

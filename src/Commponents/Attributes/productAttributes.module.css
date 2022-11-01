@@ -3,19 +3,22 @@
   /* border-bottom: 1px solid #E1E8EE; */
   margin-bottom: 20px;
 }
-.cable_config p{
-  text-align: left
-}
 
 .cable_choose {
   display: flex;
-  margin: 7px;
+}
+
+.attributesTitle{
+  font-family: Roboto Condensed;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left
 }
 
 .button {
   margin: 5px;
-  width: 60px;
-  height: 40px;
+  width: 63px;
+  height: 45px;
   position: relative;
   border: 1px solid black;
   font-size: 16px;
@@ -50,7 +53,11 @@
   z-index: 7;
   line-height: 1.8em;
 }
-
+.button label{
+  font-family: Source Sans Pro;
+  font-size: 16px;
+  font-weight: 400;
+}
 /* Color Customize  */
 
 .button_color {
@@ -91,12 +98,17 @@
   line-height: 1.8em;
 }
 
-/* Smaller for miniCart */
+/****** Smaller for miniCart ******/
+.attributesTitle_small{
+  font-size: 14px;
+  font-weight: 400;
+  text-align: left
+}
 .button_color_small{
   float: left;
   margin: 3px;
-  width: 24px;
-  height: 27px;
+  width: 20px;
+  height: 20px;
   position: relative;
   border: 0.5px solid black;
 }
@@ -104,7 +116,6 @@
 .button_color_small label,
 .button_color_small input {
   display: block;
-  padding: 5px 15px;
   position: absolute;
   top: 0;
   left: 0;
@@ -122,31 +133,26 @@
 .button_color_small input[type="radio"]:checked + label{
   border: 2px solid #5ECE7B;
   color: #fff;
-  padding: 10px;
 }
 
 .button_color_small label {
   z-index: 7;
-  /* line-height: 1.8em; */
 }
-
-
-
 
 .button_small {
   margin: 3px;
-  width: 36px;
-  height: 33px;
+  width: 35px;
+  height: 28px;
   position: relative;
   border: 1px solid black;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 400;
   text-align: center;
 }
 
 .button_small label,
 .button_small input {
   display: block;
-  padding: 5px;
   position: absolute;
   top: 0;
   left: 0;

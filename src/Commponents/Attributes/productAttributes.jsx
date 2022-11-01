@@ -9,37 +9,35 @@ class Attributes extends PureComponent {
 
 
     render() {
-        const { setAttribute, id } = this.props
-
-
+        const { setAttribute, id, inStock, miniCart } = this.props
+        const isMiniCart = 'a-1'
         return (
             <div>
                 {this.props.attributes.map((att, key) => {
                     return (
                         <div className={style.cable_config} key={key}>
-                            <p>
-                            <b>{att.name}:</b>
+                            <p className={miniCart ? style.attributesTitle_small : style.attributesTitle}>
+                                {att.name.toUpperCase()}:
                             </p>
-                            
                             <div className={style.cable_choose}>
                                 {att.items.map((attDetails, key) => {
-                                    let selectedAtribute = this.props.products
+                                    let productsInCart = this.props.products
                                     return (
                                         <span key={key}>
                                             {att.name === 'Color' ?
-                                                <div key={attDetails.id} className={id ? style.button_color_small:style.button_color} style={{ background: `${attDetails.value}` }}
-                                                    onClick={() => { !id && setAttribute(att.name, attDetails.value) }}
-                                                >
-                                                    <input type="radio" id={att.name} name={att.name} defaultChecked={id && selectedAtribute.find((el) => {
-                                                        return el.attributes[0][att.name] === attDetails.value}) ? true : false}  disabled={id && true}/>
+                                                <div key={attDetails.id} className={miniCart ? style.button_color_small : style.button_color} style={{ background: `${attDetails.value}` }}
+                                                    onClick={() => { !id && setAttribute(att.name, attDetails.value) }}>
+                                                    <input type="radio" id={att.name} name={`${att.name}-${id}`} defaultChecked={id || att.items > 0 && productsInCart.find((el) => {
+                                                        return el.attributes[0][att.name] === attDetails.value
+                                                    }) ? true : false} disabled={id || !inStock && true} />
                                                     <label htmlFor={att.name}></label>
                                                 </div>
                                                 : (
-                                                    <div className={id ?style.button_small :style.button }
-                                                        onClick={() => { !id && setAttribute(att.name, attDetails.value) }}
-                                                    >
-                                                        <input type="radio" id={att.name} name={att.name} defaultChecked={id && selectedAtribute.find((el) => {
-                                                            return el.attributes[0][att.name] === attDetails.value}) ? true : false} disabled={id && true} />
+                                                    <div className={miniCart ? style.button_small : style.button}
+                                                        onClick={() => { !id && setAttribute(att.name, attDetails.value) }}>
+                                                        <input type="radio" id={att.name} name={`${att.name}-${id}-${miniCart && isMiniCart}`} defaultChecked={id || att.items > 0 && productsInCart.find((el) => {
+                                                            return el.attributes[0][att.name] === attDetails.value
+                                                        }) ? true : false} disabled={id || !inStock && true} />
                                                         <label htmlFor={att.name}>{attDetails.value}</label>
                                                     </div>
                                                 )}
@@ -49,8 +47,6 @@ class Attributes extends PureComponent {
                             </div>
                         </div>
                     )
-
-                    // defaultChecked={selectedAtribute.map((el)=>{return el.attributes[0][att.name]== attDetails.value}) ? true : false}       defaultChecked={selectedAtribute[att.name] == attDetails.value ? true : false} onChange={() => { setAttribute(att.name, attDetails.value) }}
                 })}
             </div>
         );

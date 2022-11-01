@@ -15,6 +15,7 @@ const GET_PRODUCTS = () => gql`
 		name
     products{
       id
+      brand
       name
       inStock
       category
@@ -85,6 +86,7 @@ const GET_ProductByCategory = (category) => gql`
     name
     products {
       id
+      brand
       name
       inStock
       gallery

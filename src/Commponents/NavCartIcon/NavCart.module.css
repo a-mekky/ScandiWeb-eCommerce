@@ -3,7 +3,8 @@
     background-color: transparent;
     border: none;
     width: max-content;
-    margin-left: 22px;
+    margin-top: 6px;
+    cursor: pointer;
   }
   
   .cartIcon {

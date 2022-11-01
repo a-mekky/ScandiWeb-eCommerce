@@ -28,30 +28,24 @@ class PDP extends PureComponent {
         const handelActiveImage = (img) => {
             this.setState({ selectImage: img })
         }
-         const setAttribute = (name, value) => {
+        const setAttribute = (name, value) => {
             const attributeState = this.state.selectedAtribute
             // Assign new attribute 
             const updatedAttributes = Object.assign(...attributeState, { [name]: value })
-
-            // Sperate into multi objects
-            // const newStateAttribute = Object.keys(updatedAttributes).map(key => ({ [key]: updatedAttributes[key] }))
             // Set New State
             this.setState({ selectedAtribute: [updatedAttributes] })
 
         }
 
         const addToCart = (data, selectedAttributes,) => {
-            
-            if (data.attributes.length === 0) {
-                this.props.addToCart(data)
-            }
-            else if (this.state.selectedAtribute.length === 0) {
-                alert("Please Select The Attributes First")
-            }
-            else if (Object.keys(this.state.selectedAtribute[0]).length === data.attributes.length) {
+
+            if (data.attributes.length === 0 || Object.keys(this.state.selectedAtribute[0]).length === data.attributes.length) {
                 this.props.addToCart(data, selectedAttributes)
                 this.setState({ selectedAtribute: [] })
                 this.props.navigate(`/cart`)
+            }
+            else if (this.state.selectedAtribute.length === 0) {
+                alert("Please Select The Attributes First")
             }
             else {
                 alert("Please Select Other Attributes First")
@@ -76,34 +70,34 @@ class PDP extends PureComponent {
                                             {data.product.gallery.map((img, key) => {
                                                 return (
                                                     <div key={key} onClick={() => { handelActiveImage(img) }} className={style.image_details}>
-                                                        <img src={img} height={150} width={150} alt={'ProductImage'} style={{ cursor: 'pointer' }} />
+                                                        <img src={img} height={'80px'} width={'79px'} alt={'ProductImage'} style={{ cursor: 'pointer' }} />
                                                     </div>
                                                 )
                                             })}
                                         </div>
 
                                         <div className={style.container__middle}>
-                                            <img src={this.state.selectImage ? this.state.selectImage : data.product.gallery[0]} width={'500rem'} alt={'ProductImage'} />
+                                            <img src={this.state.selectImage ? this.state.selectImage : data.product.gallery[0]} width={'610px'} height={'511px'} alt={'ProductImage'} />
                                         </div>
 
                                         <div className={style.container__right}>
                                             <div className={style.product_description}>
-                                                <span >{data.product.brand}</span>
-                                                <h1>{data.product.name}</h1>
+                                                <p className={style.product_brand}>{data.product.brand}</p>
+                                                <p className={style.product_name}>{data.product.name}</p>
                                             </div>
-
-                                            <Attributes attributes={data.product.attributes} setAttribute={setAttribute} />
-
+                                            {data.product.attributes &&
+                                                <Attributes attributes={data.product.attributes} setAttribute={setAttribute} inStock={data.product.inStock} />
+                                            }
                                             <div className={style.product_price}>
                                                 <div>
-                                                    <p><b>PRICE:</b></p>
-                                                    <span><b>{currentCurrency.currency.symbol} {currentCurrency.amount} </b></span>
+                                                    <p>PRICE:</p>
+                                                    <p>{currentCurrency.currency.symbol}{currentCurrency.amount}</p>
                                                 </div>
                                             </div>
                                             <br />
                                             <div className={style.cartBtn}>
                                                 {!data.product.inStock ? (
-                                                    <button disabled>  ADD TO CART </button>) : (
+                                                    <button disabled>  Out Of Stock </button>) : (
                                                     <button onClick={() => addToCart(data.product, this.state.selectedAtribute)}>  ADD TO CART </button>
                                                 )}
                                             </div>

@@ -19,6 +19,7 @@ class PLP extends PureComponent {
 
 
     render() {
+        // Get Category from Url
         const fromURL = window.location.pathname.replace('/', '')
         return (<>
             <Query query={GET_ProductByCategory(this.props.porps !== null  ? this.props.porps.category : fromURL)}>
@@ -28,7 +29,7 @@ class PLP extends PureComponent {
                     else
                         return (
                             <>
-                                <h1 style={{ marginLeft: '10rem' }}>{data.category.name.charAt(0).toUpperCase() + data.category.name.slice(1)}</h1>
+                                <h1 className={style.categoryTitle}>{data.category.name.charAt(0).toUpperCase() + data.category.name.slice(1)}</h1>
                                 <div className={style.flex_container}>
                                     {data.category.products.map((product) => {
                                         let currentCurrency = product.prices.find(obj => {
@@ -43,8 +44,8 @@ class PLP extends PureComponent {
                                                             <img src={product.gallery[0]} alt="Product" width={500} height={350} />
                                                         </div>
                                                         <div className={style.container}>
-                                                            <h4><b>{product.name}</b></h4>
-                                                            <h5><b><span>{currentCurrency.currency.symbol}</span> {currentCurrency.amount}</b></h5>
+                                                            <p className={style.productName}>{product.brand} {product.name}</p>
+                                                            <p className={style.productPrice}>{currentCurrency.currency.symbol}{currentCurrency.amount}</p>
                                                         </div>
                                                     </div>
                                                 </Link>

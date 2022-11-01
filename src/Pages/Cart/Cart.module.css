@@ -3,16 +3,15 @@
     flex-wrap: wrap;
     flex-direction: column;
     max-width: 70rem;
-    margin: 0px auto;
-    background: #FFFFFF;
+    margin: 2rem 5rem 5rem 5rem;
 }
 
 .title {
-    height: 60px;
+    height: 70px;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 55px;
     border-bottom: 1px solid #E1E8EE;
-    padding: 20px 30px;
-    font-size: 18px;
-    font-weight: 400;
 }
 
 .item {
@@ -20,6 +19,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    border-bottom: 1px solid #E1E8EE;
 }
 
 .item_details {
@@ -28,23 +28,55 @@
 
 }
 
+.productBrand{
+    font-size: 30px;
+    font-weight: 600;
+}
+.productname{
+    font-size: 30px;
+    font-weight: 400;
+}
+.productPrice{
+    font-size: 24px;
+    font-weight: 700;
+}
+
 .item_gallery {
     flex-direction: column;
 }
 
+
+
 .orderSection  {
     display: flex;
     flex-direction: column;
+    margin-top: 2rem;
+}
+.orderSection div{
+    display: flex;
+}
+.orderSection div p{
+    font-size: 24px;
+    font-weight: 400;
+    width: 7rem ;
+}
+
+.orderSection div span{
+    display: flex;
+    margin-left: 1rem;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .orderSection button {
     display: block;
-    width: 150px;
+    width: 279px;
     background-color: #5ECE7B;
     border: none;
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: 600    ;
     color: #FFFFFF;
-    text-decoration: none;
     padding: 12px 30px;
     transition: all .5s;
     cursor: pointer;

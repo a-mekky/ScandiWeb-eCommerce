@@ -15,12 +15,13 @@
   .menuBar ul li {
     padding: 10px 30px;
     padding-left: 2px;
-    text-align: center;
     position: relative;
+    padding: 15px 20px
   }
   
-  .menuBar ul li a {
-    font-size: 20px;
+  .menuBar ul a li {
+    font-size: 16px;
+    font-weight: 400;
     text-decoration: none;
     transition: all 0.3s;
   }

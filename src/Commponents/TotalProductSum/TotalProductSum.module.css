@@ -1,8 +1,12 @@
-.total {
+
+
+.total  {
     display: flex;
     justify-content: space-between;
+      margin-top: 1rem;
+  }
+  .total p{
     font-family: Roboto;
-    font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 18px;
@@ -10,5 +14,4 @@
   .totalPrice {
     font-weight: 700;
     font-size: 16px;
-    line-height: 160%;
   }

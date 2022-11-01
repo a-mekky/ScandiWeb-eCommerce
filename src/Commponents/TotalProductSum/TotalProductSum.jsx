@@ -29,15 +29,13 @@ class TotalProductSum extends PureComponent {
     render() {
 
         return (<>
-            <p className={''}>
-                <span>Total: </span>
+            <div className={style.total}>
+                <p>Total: </p>
                 <span className={style.totalPrice}>
-                    <b>
-                        {this.state.currencySymble}
-                        {Number(this.state.total).toFixed(2)}
-                    </b>
+                    {this.state.currencySymble}
+                    {Number(this.state.total).toFixed(2)}
                 </span>
-            </p>
+            </div>
         </>);
     }
 }

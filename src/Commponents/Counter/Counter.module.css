@@ -3,8 +3,7 @@
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
-  font-style: normal;
-  margin-right: 40px;
+  margin-right: 1rem;
 }
 
 .btn {
@@ -39,7 +38,7 @@
 
 .bigValue {
   font-size: 24px;
-  /* line-height: 200%; */
+  font-weight: 500;
   color: #1d1f22;
   margin-top: 40px;
   margin-bottom: 40px;
