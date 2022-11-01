@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import { createRef, PureComponent } from 'react';
 import { Query } from '@apollo/client/react/components';
 import { GET_CURRENCIES } from '../../Services/GraphqlRequests';
 import style from './Currencies.module.css'
@@ -7,32 +7,80 @@ import { connect } from 'react-redux';
 import { changeCurrency, setCurrencyFirstTime } from './../../Redux/Actions';
 
 class Currencies extends PureComponent {
-    
+    state = {
+        open: false,
+        label: '$',
+        currency: null
+    };
+    container = createRef();
+
     componentDidMount() {
         Client.query({
             query: GET_CURRENCIES()
-        }).then(res=>this.props.setCurrencyFirstTime(res.data.currencies[0].label))
+        }).then(res => this.props.setCurrencyFirstTime(res.data.currencies[0].label))
+        document.addEventListener('click', this.handleClickOutside)
     }
-    
-    selectedCurrency = (event) => {
-        const currency = event.target.value
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClickOutside);
+    }
+
+    selectedCurrency = (currency) => {
         this.setState({ currency: currency })
         this.props.setCurrency(currency)
     }
-    render() {        
+    handleButtonClick = () => {
+        this.setState(state => {
+            return {
+                open: !state.open,
+            };
+        });
+    };
+    handleClickOutside = event => {
+        if (
+            this.container.current &&
+            !this.container.current.contains(event.target)
+        ) {
+            this.setState({
+                open: false,
+            });
+        }
+    };
+
+    hadleListItemClick = event => {
+        const [symbol] = event.target.innerText;
+        const currency = event.target.innerText.split(/(\s+)/)[2]
+        this.setState({
+            label: symbol,
+            open: false,
+        });
+        this.selectedCurrency(currency)
+
+    };
+    render() {
+        const buttonStyle = this.state.open
+            ? `${style.button} ${style['button--open']}`
+            : `${style.button} ${style['button--closed']}`;
         return (
             <Query query={GET_CURRENCIES()}>
                 {({ loading, data }) => {
                     if (loading) return <h2>Loading...</h2>;
                     else return (
-                        <div className={style.custom_select}>
-                            <select onChange={this.selectedCurrency} >
-                                {data.currencies.map((item, key) => { 
-                                    return (
-                                        <option key={key} className={style.custom_option} value={item.label}>{item.symbol} {item.label}</option>
-                                    )
-                                })}
-                            </select>
+                        <div className={style.container} ref={this.container}>
+                            <button type="button" className={buttonStyle} onClick={this.handleButtonClick}>
+                                {this.state.label}
+                            </button>
+
+                            {this.state.open && (
+                                <div className={style.dropdown}>
+                                    <ul style={{ paddingLeft: '0px' }}>
+                                        {data.currencies.map(item => (
+                                            <li key={item.symbol} data={item.symbol} title={item.symbol} onClick={this.hadleListItemClick}>
+                                                {item.symbol} {item.label}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                     )
                 }}
@@ -49,7 +97,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         setCurrency: (currency) => dispatch(changeCurrency(currency)),
-        setCurrencyFirstTime: (currency)=> dispatch(setCurrencyFirstTime(currency))
+        setCurrencyFirstTime: (currency) => dispatch(setCurrencyFirstTime(currency))
     }
 };
 

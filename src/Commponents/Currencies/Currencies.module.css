@@ -1,27 +1,57 @@
-.custom_select{
-    width: 85px;
+.container {
     position: relative;
-}
-
-.custom_select select {
-    width: 100%;
+    display: inline-block;
+    margin-top: 7px;
+  }
+  
+  .button {
+    width: 38px;
+    padding: 0;
     border: none;
-    padding: 10px;
-    background:none;
+    background-color: #fff;
+    color: #1d1f22;
+    font-size: 18px;
+    font-weight: 500;
     cursor: pointer;
-}
-
-.custom_option{
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .button--open {
+    background-image: url('../../Assists/ArrowUp.svg');
+    background-repeat: no-repeat;
+    background-position: center right;
+  }
+  
+  .button--closed {
+    background-image: url('../../Assists/ArrowDwon.svg');
+    background-repeat: no-repeat;
+    background-position: center right;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1;
+    background-color: #fff;
+    width: 114px;
     border: none;
-    background: white;
-}
-
-.selected{
-position: absolute;
-width: 80%;
-height: 100%;
-top: 0;
-left: 0;
-
-}
+    box-shadow: 0px 4px 35px 0px #a8acb030;
+  }
+  
+  .dropdown ul {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dropdown li {
+    padding: 20px 15px;
+    font-weight: 500;
+    font-size: 18px;
+    
+  }
+  
+  .dropdown li:hover {
+    background-color: rgba(57, 55, 72, 0.22);
+    cursor: pointer;
+  }
+  
