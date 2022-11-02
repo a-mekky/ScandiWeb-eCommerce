@@ -27,17 +27,17 @@ class Attributes extends PureComponent {
                                             {att.name === 'Color' ?
                                                 <div key={attDetails.id} className={miniCart ? style.button_color_small : style.button_color} style={{ background: `${attDetails.value}` }}
                                                     onClick={() => { !id && setAttribute(att.name, attDetails.value) }}>
-                                                    <input type="radio" id={att.name} name={`${att.name}-${id}`} defaultChecked={id || att.items > 0 && productsInCart.find((el) => {
+                                                    <input type="radio" id={att.name} name={`${att.name}-${id}`} defaultChecked={(id || att.items > 0) && productsInCart.find((el) => {
                                                         return el.attributes[0][att.name] === attDetails.value
-                                                    }) ? true : false} disabled={id || !inStock && true} />
+                                                    }) ? true : false} disabled={(id || !inStock) && true} />
                                                     <label htmlFor={att.name}></label>
                                                 </div>
                                                 : (
                                                     <div className={miniCart ? style.button_small : style.button}
                                                         onClick={() => { !id && setAttribute(att.name, attDetails.value) }}>
-                                                        <input type="radio" id={att.name} name={`${att.name}-${id}-${miniCart && isMiniCart}`} defaultChecked={id || att.items > 0 && productsInCart.find((el) => {
+                                                        <input type="radio" id={att.name} name={`${att.name}-${id}-${miniCart && isMiniCart}`} defaultChecked={(id || att.items > 0) && productsInCart.find((el) => {
                                                             return el.attributes[0][att.name] === attDetails.value
-                                                        }) ? true : false} disabled={id || !inStock && true} />
+                                                        }) ? true : false} disabled={(id || !inStock) && true} />
                                                         <label htmlFor={att.name}>{attDetails.value}</label>
                                                     </div>
                                                 )}

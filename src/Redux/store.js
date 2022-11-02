@@ -2,11 +2,11 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { changeCurrency, addProductToCart } from './Reducers';
 
 
+const reducer = combineReducers({ currency: changeCurrency, cart: addProductToCart })
 
+const store = configureStore({ reducer });
 
-const rootReducer = combineReducers({ currency: changeCurrency, cart: addProductToCart })
-const store = configureStore({ reducer: rootReducer })
-
+store.subscribe(() => localStorage.setItem('reduxState', JSON.stringify(store.getState())))
 
 
 export default store;

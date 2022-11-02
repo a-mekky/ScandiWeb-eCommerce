@@ -4,7 +4,6 @@ import style from './Cart.module.css';
 import Attribute from './../../Commponents/Attributes/productAttributes';
 import ProductGallery from '../../Commponents/ProductGallery/ProductGallery';
 import Counter from '../../Commponents/Counter/Counter';
-import TotalProductSum from '../../Commponents/TotalProductSum/TotalProductSum';
 
 class Cart extends PureComponent {
     state = {

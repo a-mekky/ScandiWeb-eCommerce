@@ -5,28 +5,44 @@ import style from './Currencies.module.css'
 import { Client } from './../../Services/Fetch_From_API';
 import { connect } from 'react-redux';
 import { changeCurrency, setCurrencyFirstTime } from './../../Redux/Actions';
+import PopupMessage from './../PopupMessage/PopupMessage';
 
 class Currencies extends PureComponent {
     state = {
         open: false,
         label: '$',
-        currency: null
+        currency: null,
     };
     container = createRef();
 
     componentDidMount() {
-        Client.query({
-            query: GET_CURRENCIES()
-        }).then(res => this.props.setCurrencyFirstTime(res.data.currencies[0].label))
+        if (localStorage.getItem('reduxState')) {
+            let localState = JSON.parse(localStorage.getItem('reduxState'))
+            Client.query({
+                query: GET_CURRENCIES()
+            }).then(res => this.setState({ label: res.data.currencies.find(el => { return el.label === localState.currency.currency }).symbol }))
+        }
+        else{
+            Client.query({
+                query: GET_CURRENCIES()
+            }).then(res => this.props.setCurrencyFirstTime(res.data.currencies[0].label))
+        }
+
+
         document.addEventListener('click', this.handleClickOutside)
     }
     componentWillUnmount() {
         document.removeEventListener('click', this.handleClickOutside);
     }
+    PopupMessageHandler(message) {
+        this.setState({ message: message })
+        setTimeout(() => this.setState({ message: null }), 3000)
+    }
 
     selectedCurrency = (currency) => {
         this.setState({ currency: currency })
         this.props.setCurrency(currency)
+        this.PopupMessageHandler('Currency changed successfully')
     }
     handleButtonClick = () => {
         this.setState(state => {
@@ -36,13 +52,8 @@ class Currencies extends PureComponent {
         });
     };
     handleClickOutside = event => {
-        if (
-            this.container.current &&
-            !this.container.current.contains(event.target)
-        ) {
-            this.setState({
-                open: false,
-            });
+        if (this.container.current && !this.container.current.contains(event.target)) {
+            this.setState({ open: false })
         }
     };
 
@@ -56,6 +67,8 @@ class Currencies extends PureComponent {
         this.selectedCurrency(currency)
 
     };
+
+
     render() {
         const buttonStyle = this.state.open
             ? `${style.button} ${style['button--open']}`
@@ -64,8 +77,10 @@ class Currencies extends PureComponent {
             <Query query={GET_CURRENCIES()}>
                 {({ loading, data }) => {
                     if (loading) return <h2>Loading...</h2>;
-                    else return (
+                    else return (<>
+                        {this.state.message && <PopupMessage message={this.state.message} />}
                         <div className={style.container} ref={this.container}>
+
                             <button type="button" className={buttonStyle} onClick={this.handleButtonClick}>
                                 {this.state.label}
                             </button>
@@ -82,7 +97,7 @@ class Currencies extends PureComponent {
                                 </div>
                             )}
                         </div>
-                    )
+                    </>)
                 }}
             </Query>
         );

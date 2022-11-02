@@ -1,18 +1,21 @@
-*{
+* {
   font-family: Raleway;
+  
 }
 
-p{
+p {
   margin: 0rem 0rem 0.7rem 0rem;
+  color: #1D1F22;
 }
 
-a{
+a {
   text-decoration: none;
+  color: #1D1F22;
 }
+
 .active {
   font-weight: 600;
-  color: #5ece7b;
+  color: #5ece7b !important;
   text-decoration: none;
   border-bottom: 2px solid #5ece7b;
 }
-

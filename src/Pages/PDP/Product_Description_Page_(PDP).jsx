@@ -5,6 +5,7 @@ import style from './PDP.module.css'
 import Attributes from '../../Commponents/Attributes/productAttributes';
 import { connect } from 'react-redux';
 import { addToCart } from './../../Redux/Actions';
+import PopupMessage from './../../Commponents/PopupMessage/PopupMessage';
 
 
 
@@ -16,12 +17,18 @@ class PDP extends PureComponent {
         selectImage: null,
         selectedAtribute: [],
         length: 0,
+        message: null
     };
     componentDidMount() {
         const url = new URL(window.location.href);
         const Id = url.href.split('/')[4]
         this.setState({ productId: Id });
     };
+
+    PopupMessageHandler(message) {
+        this.setState({ message: message })
+        setTimeout(() => this.setState({ message: null }), 3000)
+    }
 
     render() {
 
@@ -38,17 +45,16 @@ class PDP extends PureComponent {
         }
 
         const addToCart = (data, selectedAttributes,) => {
-
-            if (data.attributes.length === 0 || Object.keys(this.state.selectedAtribute[0]).length === data.attributes.length) {
+            if (this.state.selectedAtribute.length === 0) {
+                this.PopupMessageHandler("Please select the attributes first")
+            }
+            else if (Object.keys(this.state.selectedAtribute[0]).length === data.attributes.length || data.attributes.length === 0) {
                 this.props.addToCart(data, selectedAttributes)
                 this.setState({ selectedAtribute: [] })
                 this.props.navigate(`/cart`)
             }
-            else if (this.state.selectedAtribute.length === 0) {
-                alert("Please Select The Attributes First")
-            }
             else {
-                alert("Please Select Other Attributes First")
+                this.PopupMessageHandler("Please select other attributes first")
             }
         }
 
@@ -65,6 +71,7 @@ class PDP extends PureComponent {
                             })
                             return (
                                 <>
+                                    {this.state.message && <PopupMessage message={this.state.message} />}
                                     <main className={style.container__main_flex}>
                                         <div className={style.container__left}>
                                             {data.product.gallery.map((img, key) => {
@@ -97,7 +104,7 @@ class PDP extends PureComponent {
                                             <br />
                                             <div className={style.cartBtn}>
                                                 {!data.product.inStock ? (
-                                                    <button disabled>  Out Of Stock </button>) : (
+                                                    <button onClick={() => this.PopupMessageHandler('Sorry this product is out of stock')}>  Out Of Stock </button>) : (
                                                     <button onClick={() => addToCart(data.product, this.state.selectedAtribute)}>  ADD TO CART </button>
                                                 )}
                                             </div>

@@ -1,7 +1,13 @@
 
 
+const initialState = localStorage.getItem('reduxState')
+  ? JSON.parse(localStorage.getItem('reduxState'))
+  : {
+    currency: { currency: null },
+    cart: { products: [] }
+  }
 
-export const changeCurrency = function (state = { currency: null }, action) {
+export const changeCurrency = function (state = initialState.currency, action) {
   switch (action.type) {
     case 'changeCurrency':
       return {
@@ -18,7 +24,7 @@ export const changeCurrency = function (state = { currency: null }, action) {
   }
 }
 
-export const addProductToCart = function (state = { products: [] }, action) {
+export const addProductToCart = function (state = initialState.cart, action) {
   function handelValue(state, action) {
     let id = action.payload.itemId
     let value = action.payload.value
@@ -30,7 +36,7 @@ export const addProductToCart = function (state = { products: [] }, action) {
     })
     let index = state.products.indexOf(product)
 
-    if (product){
+    if (product) {
       let newQty = { ...product, qty: product.qty + value }
       newState.splice(index, 0, newQty)
     }

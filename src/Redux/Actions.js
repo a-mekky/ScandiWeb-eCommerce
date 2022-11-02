@@ -27,7 +27,6 @@ export const addToCart = createAction('addToCart', function addToCart(productDat
             productDetails: productData,
             attributes: selectedAttributes,
             qty: 1,
-
         }
     }
 })
