@@ -1,19 +1,21 @@
-
-.flex_container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  justify-content: center;
+.container {
+  display: grid;
+  column-gap: 5px;
+  grid-template-columns: 4fr 4fr 4fr; 
+  margin-left: 10vh;
 }
 
-.categoryTitle{
+.categoryTitle {
   margin-left: 10rem;
   font-size: 42px;
   font-weight: 400;
 }
-.item{
+
+.item {
   position: relative;
   margin: 2rem;
+  width: 400px;
+  height: 444px;
 
 }
 
@@ -22,6 +24,7 @@
   flex: 0 0 200px;
   margin: 10px;
   position: relative;
+
 }
 
 .card_outOfStock {
@@ -30,11 +33,12 @@
   margin: 10px;
   background: #ffffff;
   opacity: 0.5;
+  
 }
 
 .text_outOfStock {
   position: absolute;
-  padding: 150px 150px;
+  padding: 150px 100px;
   font-size: 30px;
   color: #8d8f9a;
 }
@@ -42,8 +46,16 @@
 .text_inStock {
   display: none;
 }
-.img{
+
+.img {
   padding: 10px;
+  height: 350px;
+}
+
+.img>img {
+  width: 100%;
+  max-height: 100%;
+  object-fit: cover;
 }
 
 .CardButton {
@@ -66,14 +78,16 @@
 }
 
 /* Add some padding inside the card container */
-.container {
+.detailsContainer {
   padding: 2px 16px;
 }
+
 .productName {
-font-size: 18px;
-font-weight: 300;
-}
-.productPrice{
   font-size: 18px;
-font-weight: 500;
+  font-weight: 300;
+}
+
+.productPrice {
+  font-size: 18px;
+  font-weight: 500;
 }

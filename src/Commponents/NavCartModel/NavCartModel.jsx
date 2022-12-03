@@ -6,6 +6,7 @@ import Counter from './../Counter/Counter';
 import Attributes from "../Attributes/productAttributes";
 import ProductGallery from "../ProductGallery/ProductGallery";
 import TotalProductSum from './../TotalProductSum/TotalProductSum';
+import CartProducts from './../CartProducts/CartProducts';
 
 
 class NavCartModal extends PureComponent {
@@ -41,48 +42,31 @@ class NavCartModal extends PureComponent {
     }
   };
 
+
   render() {
-    const { products, currency, onCloseModal } = this.props;
+    const { products, onCloseModal } = this.props;
     return (
       <div className={style.Overlay} onClick={this.handleCloseModal}>
-        <div className={style.Modal} style={{ overflowY: products.length > 3 && "scroll" }}>
+        <div className={style.Modal} style={{ overflowY: products.length === 3 ? "scroll" : "hidden" }}>
           <p className={style.title}>
             My Bag,{" "}
-            <span className={style.totalItems}>{products.length} items</span>
+            <span className={style.totalItems}> {products.reduce((x, object) => {
+              return x + object.qty;
+            }, 0)} items</span>
           </p>
           {products.map((item, key) => {
-            let product = item.productDetails
-            let currentCurrency = product.prices.find(obj => {
-              return obj.currency.label === currency.currency
-            })
-
             return (
-
-              <div key={key} className={style.miniCard}>
-                <div className={style.leftSide}>
-                  <p className={style.itemName}>{product.brand}</p>
-                  <p>{product.name}</p>
-                  <p className={style.itemPrice}>
-                    {currentCurrency.currency.symbol}{currentCurrency.amount}
-                  </p>
-                  <div className={style.attributes}>
-                    <Attributes attributes={product.attributes} id={item.itemId} miniCart={true} />
-                  </div>
-                </div>
-
-                <div className={style.rightSide}>
-                  <Counter qty={item.qty} id={item.itemId} />
-                  <ProductGallery gallery={product.gallery} width={'121px'} height={'190px'} />
-                </div>
+              <div key={key}>
+                <CartProducts product={item} miniCart={true} />
               </div>
             )
           })}
 
           <div className={style.modalOptions}>
             <div>
-            <TotalProductSum products={products} />
+              <TotalProductSum products={products} />
             </div>
-            
+
             <div className={style.buttons}>
               <Link to={"/cart"}>
                 <button className={style.buttonLink} onClick={onCloseModal}>

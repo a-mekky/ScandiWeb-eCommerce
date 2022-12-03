@@ -41,7 +41,8 @@
   opacity: 0.011;
   z-index: 8;
   cursor: pointer;
-
+  width: 90%;
+  height: 90%;
 }
 
 .button input[type="radio"]:checked + label {
@@ -159,6 +160,7 @@
   right: 0;
   bottom: 0;
   transition: all .3s;
+  font-size: 11px;
 }
 
 .button_small input[type="radio"] {

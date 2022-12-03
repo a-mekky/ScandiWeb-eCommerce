@@ -10,7 +10,7 @@ import PopupMessage from './../PopupMessage/PopupMessage';
 class Currencies extends PureComponent {
     state = {
         open: false,
-        label: '$',
+        label: '',
         currency: null,
     };
     container = createRef();
@@ -25,7 +25,7 @@ class Currencies extends PureComponent {
         else{
             Client.query({
                 query: GET_CURRENCIES()
-            }).then(res => this.props.setCurrencyFirstTime(res.data.currencies[0].label))
+            }).then(res =>{ return this.props.setCurrencyFirstTime(res.data.currencies[0].label),this.setState({ label: res.data.currencies[0].symbol})})
         }
 
 
@@ -87,7 +87,7 @@ class Currencies extends PureComponent {
 
                             {this.state.open && (
                                 <div className={style.dropdown}>
-                                    <ul style={{ paddingLeft: '0px' }}>
+                                    <ul>
                                         {data.currencies.map(item => (
                                             <li key={item.symbol} data={item.symbol} title={item.symbol} onClick={this.hadleListItemClick}>
                                                 {item.symbol} {item.label}

@@ -1,4 +1,4 @@
-import { PureComponent } from 'react';
+import { PureComponent, createRef } from 'react';
 import { Query } from '@apollo/client/react/components';
 import { GET_ProductByID } from '../../Services/GraphqlRequests';
 import style from './PDP.module.css'
@@ -6,6 +6,7 @@ import Attributes from '../../Commponents/Attributes/productAttributes';
 import { connect } from 'react-redux';
 import { addToCart } from './../../Redux/Actions';
 import PopupMessage from './../../Commponents/PopupMessage/PopupMessage';
+import DOMPurify from 'dompurify';
 
 
 
@@ -19,16 +20,20 @@ class PDP extends PureComponent {
         length: 0,
         message: null
     };
+    selected = createRef();
     componentDidMount() {
         const url = new URL(window.location.href);
         const Id = url.href.split('/')[4]
         this.setState({ productId: Id });
+
     };
+
 
     PopupMessageHandler(message) {
         this.setState({ message: message })
         setTimeout(() => this.setState({ message: null }), 3000)
     }
+
 
     render() {
 
@@ -44,19 +49,27 @@ class PDP extends PureComponent {
 
         }
 
-        const addToCart = (data, selectedAttributes,) => {
-            if (this.state.selectedAtribute.length === 0) {
+        const addToCart = (data, selectedAttributes) => {
+            if (data.attributes.length > 0 && this.state.selectedAtribute.length === 0) {
                 this.PopupMessageHandler("Please select the attributes first")
             }
-            else if (Object.keys(this.state.selectedAtribute[0]).length === data.attributes.length || data.attributes.length === 0) {
+            else if (data.attributes.length === 0) {
+                this.props.addToCart(data, selectedAttributes)
+                this.PopupMessageHandler("Product successfully add to cart")
+            }
+            else if (Object.keys(this.state.selectedAtribute[0]).length === data.attributes.length) {
                 this.props.addToCart(data, selectedAttributes)
                 this.setState({ selectedAtribute: [] })
-                this.props.navigate(`/cart`)
+                let allSelectedAttributes = document.querySelectorAll('input')
+                allSelectedAttributes.forEach((element) => { return element.checked = false })
+                this.PopupMessageHandler("Product successfully add to cart")
             }
             else {
                 this.PopupMessageHandler("Please select other attributes first")
             }
         }
+
+        
 
         return (
             <>
@@ -77,13 +90,15 @@ class PDP extends PureComponent {
                                             {data.product.gallery.map((img, key) => {
                                                 return (
                                                     <div key={key} onClick={() => { handelActiveImage(img) }} className={style.image_details}>
-                                                        <img src={img} height={'80px'} width={'79px'} alt={'ProductImage'} style={{ cursor: 'pointer' }} />
+                                                        <div className={data.product.inStock ? style.text_inStock : style.text_outOfStock}>Out of Stock</div>
+                                                        <img src={img} height={'80px'} width={'79px'} alt={'ProductImage'} />
                                                     </div>
                                                 )
                                             })}
                                         </div>
 
                                         <div className={style.container__middle}>
+                                            <div className={data.product.inStock ? style.text_inStock : style.text_outOfStock_Big}>Out of Stock</div>
                                             <img src={this.state.selectImage ? this.state.selectImage : data.product.gallery[0]} width={'610px'} height={'511px'} alt={'ProductImage'} />
                                         </div>
 
@@ -92,8 +107,8 @@ class PDP extends PureComponent {
                                                 <p className={style.product_brand}>{data.product.brand}</p>
                                                 <p className={style.product_name}>{data.product.name}</p>
                                             </div>
-                                            {data.product.attributes &&
-                                                <Attributes attributes={data.product.attributes} setAttribute={setAttribute} inStock={data.product.inStock} />
+                                            {data.product.attributes.length > 0 &&
+                                                <Attributes attributes={data.product.attributes} setAttribute={setAttribute} inStock={data.product.inStock} innerRef={this.selected} />
                                             }
                                             <div className={style.product_price}>
                                                 <div>
@@ -109,7 +124,8 @@ class PDP extends PureComponent {
                                                 )}
                                             </div>
                                             <div className={style.product_description} id="product_description">
-                                                <div dangerouslySetInnerHTML={{ __html: data.product.description }} />
+                                                <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.product.description) }} />
+                                                <div ref={this.description} />
                                             </div>
                                         </div>
                                     </main>

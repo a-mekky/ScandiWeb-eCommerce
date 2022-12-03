@@ -1,9 +1,7 @@
 import { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import style from './Cart.module.css';
-import Attribute from './../../Commponents/Attributes/productAttributes';
-import ProductGallery from '../../Commponents/ProductGallery/ProductGallery';
-import Counter from '../../Commponents/Counter/Counter';
+import CartProducts from '../../Commponents/CartProducts/CartProducts';
 
 class Cart extends PureComponent {
     state = {
@@ -63,28 +61,14 @@ class Cart extends PureComponent {
                             <p className={style.title}>CART</p>
                             <>
                                 {products.map((item, key) => {
-                                    let currentCurrency = item.productDetails.prices.find(obj => {
-                                        return obj.currency.label === this.props.state.currency.currency
-                                    })
-
                                     return (
-                                        <div className={style.item} key={key}>
-                                            <div className={style.item_details}>
-                                                <p className={style.productBrand}>{item.productDetails.brand}</p>
-                                                <p className={style.productname}>{item.productDetails.name}</p>
-                                                <p className={style.productPrice}>{currentCurrency.currency.symbol}{currentCurrency.amount}</p>
-                                                {item.productDetails.attributes &&
-                                                    <Attribute attributes={item.productDetails.attributes} id={item.itemId} miniCart={false} />
-                                                }
-
-                                            </div>
-                                            <Counter qty={item.qty} id={item.itemId} pageSize={true} />
-                                            <div className={style.item_gallery}>
-                                                <ProductGallery gallery={item.productDetails.gallery} width={'200px'} height={'288px'} />
-                                            </div>
+                                        <div key={key}>
+                                            <CartProducts product={item} />
                                         </div>
+
                                     )
                                 })}
+
                             </>
                             <div className={style.orderSection}>
                                 <div>
@@ -126,9 +110,6 @@ const mapStateToProps = (state) => {
         state
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+
+export default connect(mapStateToProps, null)(Cart);

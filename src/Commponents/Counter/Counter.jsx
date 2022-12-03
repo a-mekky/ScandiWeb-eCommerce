@@ -20,7 +20,7 @@ class Counter extends PureComponent {
     const { qty } = this.props
     return (
       <div className={style.counter}>
-        <button id={this.props.id} className={!this.props.pageSize ? style.btn : style.bigBtn} onClick={this.increment}>
+        <button id={this.props.id} className={this.props.pageSize ? style.bigBtn : style.btn} onClick={this.increment}>
           +
         </button>
         <span className={this.props.pageSize && style.bigValue}>

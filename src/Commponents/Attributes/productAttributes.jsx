@@ -7,37 +7,37 @@ class Attributes extends PureComponent {
 
     state = { selectedAtribute: [] }
 
-
     render() {
-        const { setAttribute, id, inStock, miniCart } = this.props
+        const { setAttribute, id, inStock, miniCart, attributes, products, innerRef } = this.props
         const isMiniCart = 'a-1'
+
         return (
             <div>
-                {this.props.attributes.map((att, key) => {
+                {attributes.map((att, key) => {
                     return (
-                        <div className={style.cable_config} key={key}>
+                        <div key={`${key}-${id}`} className={style.cable_config}>
                             <p className={miniCart ? style.attributesTitle_small : style.attributesTitle}>
                                 {att.name.toUpperCase()}:
                             </p>
-                            <div className={style.cable_choose}>
-                                {att.items.map((attDetails, key) => {
-                                    let productsInCart = this.props.products
+                            <div ref={innerRef} className={style.cable_choose}>
+                                {att.items.map((attDetails) => {
+                                    let productsInCart = products.find(item => { return item.itemId === id })
                                     return (
-                                        <span key={key}>
+                                        <span  key={`${attDetails.id}-${id}`}>
                                             {att.name === 'Color' ?
-                                                <div key={attDetails.id} className={miniCart ? style.button_color_small : style.button_color} style={{ background: `${attDetails.value}` }}
+                                                <div className={miniCart ? style.button_color_small : style.button_color} style={{ background: `${attDetails.value}` }}
                                                     onClick={() => { !id && setAttribute(att.name, attDetails.value) }}>
-                                                    <input type="radio" id={att.name} name={`${att.name}-${id}`} defaultChecked={(id || att.items > 0) && productsInCart.find((el) => {
-                                                        return el.attributes[0][att.name] === attDetails.value
-                                                    }) ? true : false} disabled={(id || !inStock) && true} />
+                                                    <input  type="radio" id={att.name} name={`${id}-${att.name}`}
+                                                        defaultChecked={(id || att.items > 0) && productsInCart.attributes[0][att.name] === attDetails.value ? true : false}
+                                                        disabled={(id || !inStock) && true} />
                                                     <label htmlFor={att.name}></label>
                                                 </div>
                                                 : (
                                                     <div className={miniCart ? style.button_small : style.button}
                                                         onClick={() => { !id && setAttribute(att.name, attDetails.value) }}>
-                                                        <input type="radio" id={att.name} name={`${att.name}-${id}-${miniCart && isMiniCart}`} defaultChecked={(id || att.items > 0) && productsInCart.find((el) => {
-                                                            return el.attributes[0][att.name] === attDetails.value
-                                                        }) ? true : false} disabled={(id || !inStock) && true} />
+                                                        <input type="radio" id={att.name} name={`${id}-${att.name}-${miniCart && isMiniCart}`}
+                                                            defaultChecked={(id) && attDetails.value === productsInCart.attributes[0][att.name] ? true : false}
+                                                            disabled={(id || !inStock) && true} />
                                                         <label htmlFor={att.name}>{attDetails.value}</label>
                                                     </div>
                                                 )}
@@ -47,7 +47,9 @@ class Attributes extends PureComponent {
                             </div>
                         </div>
                     )
-                })}
+                })
+                }
+
             </div>
         );
     }

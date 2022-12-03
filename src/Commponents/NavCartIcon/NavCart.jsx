@@ -35,7 +35,9 @@ class NavCart extends PureComponent {
                     <img src={Cart} width={20} height={20} alt={'CartIcon'}/>
                     
                     {products.length > 0 && (
-                        <span className={style.productCount}>{products.length}</span>
+                        <span className={style.productCount}>{products.reduce((x, object) => {
+                            return x + object.qty;
+                          }, 0)}</span>
                     )}
                 </button>
                 {showModal && <NavCartModal onCloseModal={this.onModalClose} />}

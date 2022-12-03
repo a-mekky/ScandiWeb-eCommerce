@@ -14,36 +14,7 @@
     border-bottom: 1px solid #E1E8EE;
 }
 
-.item {
-    padding: 20px 30px;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    border-bottom: 1px solid #E1E8EE;
-}
 
-.item_details {
-    flex-direction: column;
-    flex-grow: 1;
-
-}
-
-.productBrand{
-    font-size: 30px;
-    font-weight: 600;
-}
-.productname{
-    font-size: 30px;
-    font-weight: 400;
-}
-.productPrice{
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.item_gallery {
-    flex-direction: column;
-}
 
 
 

@@ -6,12 +6,18 @@ import style from './PLP.module.css'
 import { connect } from 'react-redux';
 import CartButton from "../../Commponents/CartButton/CartButton";
 import { addToCart } from './../../Redux/Actions';
+import PopupMessage from './../../Commponents/PopupMessage/PopupMessage';
 
 class PLP extends PureComponent {
     state = {}
+    PopupMessageHandler(message) {
+        this.setState({ message: message })
+        setTimeout(() => this.setState({ message: null }), 3000)
+    }
     onCartBtnClick = (product,) => {
         let selectedAttributes = []
         this.props.addToCart(product, selectedAttributes)
+        this.PopupMessageHandler("Product successfully add to cart")
     };
     onBtnRedirect = (product) => {
         this.props.navigate(`/productDetails/${product.id}`)
@@ -22,15 +28,16 @@ class PLP extends PureComponent {
         // Get Category from Url
         const fromURL = window.location.pathname.replace('/', '')
         return (<>
-            <Query query={GET_ProductByCategory(this.props.porps !== null  ? this.props.porps.category : fromURL)}>
+            <Query query={GET_ProductByCategory(this.props.porps !== null ? this.props.porps.category : fromURL)}>
                 {({ loading, data }) => {
                     if (loading) return <h2>Loading...</h2>;
                     else if (this.props.state.currency.currency == null) return <h2>Loading...</h2>;
                     else
                         return (
                             <>
+                                {this.state.message && <PopupMessage message={this.state.message} />}
                                 <h1 className={style.categoryTitle}>{data.category.name.charAt(0).toUpperCase() + data.category.name.slice(1)}</h1>
-                                <div className={style.flex_container}>
+                                <div className={style.container}>
                                     {data.category.products.map((product) => {
                                         let currentCurrency = product.prices.find(obj => {
                                             return obj.currency.label === this.props.state.currency.currency
@@ -41,9 +48,9 @@ class PLP extends PureComponent {
                                                     <div className={product.inStock ? style.card : style.card_outOfStock}>
                                                         <div className={product.inStock ? style.text_inStock : style.text_outOfStock}>Out of Stock</div>
                                                         <div className={style.img}>
-                                                            <img src={product.gallery[0]} alt="Product" width={500} height={350} />
+                                                            <img src={product.gallery[0]} alt="Product"  />
                                                         </div>
-                                                        <div className={style.container}>
+                                                        <div className={style.detailsContainer}>
                                                             <p className={style.productName}>{product.brand} {product.name}</p>
                                                             <p className={style.productPrice}>{currentCurrency.currency.symbol}{currentCurrency.amount}</p>
                                                         </div>
